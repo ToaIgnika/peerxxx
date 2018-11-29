@@ -1,0 +1,26 @@
+<app-navigation></app-navigation>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h3>Create course</h3>
+      <div class="form-group">
+        <label for="crn">CRN:</label>
+        <input type="text" class="form-control" id="crn" [(ngModel)]="courseModel.courseCrn">
+      </div>
+      <div class="form-group">
+        <label for="name">Course name:</label>
+        <input type="name" class="form-control" id="name" [(ngModel)]="courseModel.coursename">
+      </div>
+      <div class="form-group">
+        <label for="term">Term:</label>
+        <input type="text" class="form-control" id="term" [(ngModel)]="courseModel.courseTerm">
+      </div>
+      <div class="form-group">
+        <label for="year">Year:</label>
+        <input type="number" class="form-control" id="year" [(ngModel)]="courseModel.courseYear">
+      </div>
+    
+      <button type="submit" class="btn btn-primary" (click)="createCourse()">Submit</button>
+    </div>
+  </div>
+</div>

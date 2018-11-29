@@ -1,0 +1,27 @@
+<app-navigation></app-navigation>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-4 mb-4">
+      <h3>Students</h3>
+      <ul>
+        <li *ngFor="let student of studentList">{{student.lastName}} {{student.firstName}}</li>
+      </ul>
+    </div>
+    <div class="col-lg-4 mb-4">
+      <h3>Groups</h3>
+      <div class="card" *ngFor="let group of courseGroups" style="margin-bottom: 5px">
+        <div class="card-header">{{group.groupName}}</div>
+        <div class="card-body">
+          <li *ngFor="let groupMember of group.members">{{groupMember}}</li>
+        </div>
+        <div class="card-footer">Grade: <input type="number" value="100">%</div>
+      </div>
+    </div>
+    <div class="col-lg-4 mb-4">
+      <h3>Tools</h3>
+      <button class="btn btn-info btn-block">Send evaluations</button>
+      <button class="btn btn-info btn-block">Check grades</button>
+      <button class="btn btn-info btn-block">Upload class</button>
+    </div>
+  </div>
+</div>
