@@ -4,13 +4,13 @@
   <div class="row">
     <div class="col-lg-4 mb-4" *ngFor="let item of courseList">
       <div class="card h-100">
-        <h4 class="card-header">{{item.courseName}}</h4>
+        <h4 class="card-header">{{item.CourseName}}</h4>
         <div class="card-body">
-          <p class="card-text">{{item.courseYear}}</p>
+          <p class="card-text">{{item.CourseYear}}</p>
         </div>
         <div class="card-footer">
-          <a routerLink="/course/{{item.courseId}}" class="btn btn-primary btn-block">manage course</a>
-          <a (click)="deleteCourse(item.courseId)" class="btn btn-danger btn-block">delete course</a>
+          <a routerLink="/course/{{item.CourseCrn}}" class="btn btn-primary btn-block">manage course</a>
+          <a (click)="deleteCourse(item.CourseCrn)" class="btn btn-danger btn-block">delete course</a>
 
         </div>
       </div>
@@ -25,12 +25,12 @@
   <div class="row">
     <div class="col-lg-4 mb-4" *ngFor="let item of courseList">
       <div class="card h-100">
-        <h4 class="card-header">{{item.courseName}}</h4>
+        <h4 class="card-header">{{item.CourseName}}</h4>
         <div class="card-body">
-          <p class="card-text">{{item.courseYear}}</p>
+          <p class="card-text">{{item.CourseYear}}</p>
         </div>
         <div class="card-footer">
-          <a routerLink="/course/{{item.courseId}}" class="btn btn-primary btn-block">view course</a>
+          <a routerLink="/course/{{item.CourseCrn}}" class="btn btn-primary btn-block">view course</a>
 
         </div>
       </div>
@@ -38,4 +38,7 @@
     <button type="button" class="btn btn-success btn-block">Join course</button>
   </div>
 </div>
+<button type="button" (click)="addCourseStudent()" class="btn btn-success btn-block">add student course</button>
+<button type="button" (click)="deleteCourseStudent()" class="btn btn-success btn-block">delete student course</button>
+
 <br>

@@ -9,7 +9,7 @@ import { SessionService } from '../services/session.service'
 export class LoginComponent implements OnInit {
 
   private logModel : any = {
-    email : "",
+    userName : "",
     password : ""
   }
   constructor(private auth:SessionService) { }

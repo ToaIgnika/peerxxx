@@ -23,7 +23,6 @@ export class RegistrationComponent implements OnInit {
   }
 
   register() {
-    this.regModel.userName = this.regModel.email;
     if (this.regType) {
       this.auth.registerTeacher(this.regModel);
     } else {

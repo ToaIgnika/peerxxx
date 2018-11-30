@@ -33,6 +33,7 @@ export class SessionService {
           this.expire = res["expiration"];
           this.decodeToken(res['token']);
           this.loggedIn = true;
+          this.router.navigate(['/dashboard']);
         },
         err => {
           console.log(err);
@@ -51,7 +52,7 @@ export class SessionService {
       .subscribe(
         (res) => {
           console.log(res);
-          this.router.navigate(['/#']);
+          this.router.navigate(['/login']);
         },
         err => {
           console.log(err);
@@ -70,7 +71,7 @@ export class SessionService {
       .subscribe(
         (res) => {
           console.log(res);
-          this.router.navigate(['/#']);
+          this.router.navigate(['/login']);
         },
         err => {
           console.log(err);
