@@ -74,7 +74,7 @@ export class DashboardComponent implements OnInit {
       }
     };
     console.log(config);
-    this.http.get(this.ApiUrl.idCourse, config)
+    this.http.get(this.ApiUrl.allCourses, config)
       .subscribe(
         (res) => {
           console.log(res);
