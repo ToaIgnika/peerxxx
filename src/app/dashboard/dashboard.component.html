@@ -9,8 +9,8 @@
           <p class="card-text">{{item.CourseYear}}</p>
         </div>
         <div class="card-footer">
-          <a routerLink="/course/{{item.CourseCrn}}" class="btn btn-primary btn-block">manage course</a>
-          <a (click)="deleteCourse(item.CourseCrn)" class="btn btn-danger btn-block">delete course</a>
+          <a routerLink="/course/{{item.CourseId}}" class="btn btn-primary btn-block">manage course</a>
+          <a (click)="deleteCourse(item.CourseId)" class="btn btn-danger btn-block">delete course</a>
 
         </div>
       </div>
