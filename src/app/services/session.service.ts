@@ -1,7 +1,9 @@
 // Angular modules
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, throwError, Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import { catchError, map, tap } from 'rxjs/operators';
 
 // App
 import { ApiurlService } from '../services/apiurl.service';
@@ -16,34 +18,50 @@ export class SessionService {
   public loggedIn = false;
   public userData: any;
   public uid = '';
-  private jwtType =
-    'http://schemas.microsoft.com/ws/2008/06/identity/claims/role';
   public role;
+
   constructor(
     private router: Router,
     private http: HttpClient,
     private ApiUrl: ApiurlService
   ) {}
 
-  login(loginModel: LoginModel) {
-    var config = {
-      headers: {
-        'Content-Type': 'application/json; charset = utf-8;'
-      }
-    };
-    this.http.post(this.ApiUrl.loginUrl, loginModel, config).subscribe(
-      res => {
-        this.JWTToken = res['token'];
-        localStorage.setItem('LoggedJWT', this.JWTToken);
-        this.expire = res['expiration'];
-        this.decodeToken(res['token']);
-        this.loggedIn = true;
-        this.router.navigate(['/dashboard']);
-      },
-      err => {
-        console.log(err);
-      }
-    );
+  /**
+   * Authenticate a user against the server.
+   *
+   * @param loginModel a user to be authenticated
+   * @param remember whether or not to remember the user during their next visit
+   *
+   * @returns an `Observable` with a message upon success.
+   */
+  login(loginModel: LoginModel, remember: boolean): Observable<string> {
+    return this.http
+      .post(this.ApiUrl.loginUrl, loginModel, {
+        observe: 'response'
+      })
+      .pipe(
+        tap(res => {
+          // store the token
+          this.storeToken(res.body as LoginSuccessModel, remember);
+        }),
+        // pass back a success message
+        map(res => AuthService.LOGIN_SUCCESS_MSG),
+        // handle error
+        catchError(this.handleError)
+      );
+    // this.http.post(this.ApiUrl.loginUrl, loginModel).subscribe(
+    //   res => {
+    //     this.JWTToken = res['token'];
+    //     localStorage.setItem('LoggedJWT', this.JWTToken);
+    //     this.expire = res['expiration'];
+    //     this.decodeToken(res['token']);
+    //     this.loggedIn = true;
+    //     this.router.navigate(['/dashboard']);
+    //   },
+    //   err => {
+    //     console.log(err);
+    //   }
+    // );
   }
 
   registerStudent(registerStudentModel) {
