@@ -179,6 +179,16 @@ export class SessionService {
     }
   }
 
+  getToken(): TokenPayloadModel {
+    if (this.isAuthenticated()) {
+      // user is authenticated (valid token found)
+      return this.token;
+    } else {
+      // user is not authenticated
+      return null;
+    }
+  }
+
   /**
    * Get the registration url for the specified role
    *

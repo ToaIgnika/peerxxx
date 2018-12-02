@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 // App
 import { ApiurlService } from '../services/apiurl.service';
 import { SessionService } from '../services/session.service';
+import { CourseService } from '../services/course.service';
 
 @Component({
     selector: 'app-dashboard',
@@ -35,34 +36,28 @@ export class DashboardComponent {
         private router: Router,
         private http: HttpClient,
         private ApiUrl: ApiurlService,
-        private auth: SessionService
+        private auth: SessionService,
+        private courseService: CourseService
     ) {
         this.loadCourses();
     }
 
-    deleteCourse(id) {
-        // if (confirm('Are you sure to permanently delete this course?')) {
-        //     console.log('Implement delete functionality here');
-        //     // create course, on success redirect
+    deleteCourse(courseCrn) {
+        if (confirm('Are you sure to permanently delete this course?')) {
+            console.log('Implement delete functionality here');
+            // create course, on success redirect
 
-        //     const config = {
-        //         headers: {
-        //             'Content-Type': 'application/json; charset = utf-8;',
-        //             Authorization: 'Bearer ' + this.auth.JWTToken
-        //         }
-        //     };
-        //     console.log(config);
-        //     this.http.delete(this.ApiUrl.deleteCourse + id, config).subscribe(
-        //         res => {
-        //             console.log(res);
-        //             this.loadCourses();
-        //             this.router.navigate(['/dashboard']);
-        //         },
-        //         err => {
-        //             console.log(err);
-        //         }
-        //     );
-        // }
+            this.courseService.deleteCourse(courseCrn).subscribe(
+                (res: string) => {
+                    console.log(res);
+                    this.loadCourses();
+                    this.router.navigate(['/dashboard']);
+                },
+                error => {
+                    console.error(error);
+                }
+            );
+        }
     }
 
     loadCourses() {
