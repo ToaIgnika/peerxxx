@@ -18,8 +18,8 @@ export class CourseCreateComponent implements OnInit {
     courseYear : 2018,
     instructorId : ""
   };
-  constructor(private router: Router, 
-    private http: HttpClient, 
+  constructor(private router: Router,
+    private http: HttpClient,
     private ApiUrl: ApiurlService,
     private auth: SessionService) { }
 
@@ -29,11 +29,11 @@ export class CourseCreateComponent implements OnInit {
   createCourse() {
     // create course, on success redirect
     let data = this.courseModel;
-    data["instructorId"] = this.auth.uid;
+    data["instructorId"] = this.auth.getUserId();
     var config = {
       headers: {
         "Content-Type": "application/json; charset = utf-8;",
-        "Authorization": "Bearer " + this.auth.JWTToken
+        "Authorization": "Bearer " + this.auth.getToken()
       }
     };
     console.log(config);
@@ -49,5 +49,5 @@ export class CourseCreateComponent implements OnInit {
       );
     }
 
-    
+
 }
