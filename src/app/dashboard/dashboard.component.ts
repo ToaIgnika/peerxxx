@@ -1,5 +1,5 @@
 // Angular modules
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
@@ -7,39 +7,20 @@ import { Router } from '@angular/router';
 import { ApiurlService } from '../services/apiurl.service';
 import { SessionService } from '../services/session.service';
 import { CourseService } from '../services/course.service';
+import { CourseModel } from '../services/models/course-model';
 
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent {
-    public courseList: any = [
-        {
-            courseName: 'Madhat',
-            courseYear: 2018,
-            courseId: 111
-        },
-        {
-            courseName: 'Amir',
-            courseYear: 2018,
-            courseId: 222
-        },
-        {
-            courseName: 'Ffs',
-            courseYear: 2018,
-            courseId: 333
-        }
-    ];
+export class DashboardComponent implements OnInit {
+    courses: CourseModel[];
 
-    constructor(
-        private router: Router,
-        private http: HttpClient,
-        private ApiUrl: ApiurlService,
-        private auth: SessionService,
-        private courseService: CourseService
-    ) {
-        this.loadCourses();
+    constructor(private router: Router, private courseService: CourseService) {}
+
+    ngOnInit(): void {
+        this.getCourses();
     }
 
     deleteCourse(courseCrn) {
@@ -50,8 +31,7 @@ export class DashboardComponent {
             this.courseService.deleteCourse(courseCrn).subscribe(
                 (res: string) => {
                     console.log(res);
-                    this.loadCourses();
-                    this.router.navigate(['/dashboard']);
+                    this.deleteCourseFromCourseArray(courseCrn);
                 },
                 error => {
                     console.error(error);
@@ -60,32 +40,32 @@ export class DashboardComponent {
         }
     }
 
-    loadCourses() {
-        // var config = {
-        //     headers: {
-        //         'Content-Type': 'application/json; charset = utf-8;',
-        //         Authorization: 'Bearer ' + this.auth.JWTToken
-        //     }
-        // };
-        // console.log(config);
-        // this.http
-        //     .get(this.ApiUrl.instructorCourses + this.auth.uid, config)
-        //     .subscribe(
-        //         res => {
-        //             console.log(res);
-        //             this.courseList = res;
-        //             this.router.navigate(['/dashboard']);
-        //         },
-        //         err => {
-        //             console.log(err);
-        //         }
-        //     );
+    getCourses() {
+        this.courseService.getInstructorCourses().subscribe(
+            (courses: CourseModel[]) => {
+                console.log(courses);
+                this.courses = courses;
+            },
+            error => {
+                console.error(error);
+            }
+        );
     }
 
     sendEvaluations() {
         if (confirm('Are you sure you want to send eveluations?')) {
             // send out the forms
             console.log('implement sending forms');
+        }
+    }
+
+    private deleteCourseFromCourseArray(courseCrn: number): void {
+        const courseIndex = this.courses.findIndex((elem, index) => {
+            return elem.courseCrn === courseCrn;
+        });
+
+        if (courseIndex) {
+            this.courses.splice(courseIndex, 1);
         }
     }
 }

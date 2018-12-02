@@ -2,15 +2,15 @@
 <h3 style="text-align: center">Teachers courses</h3>
 <div class="container">
   <div class="row">
-    <div class="col-lg-4 mb-4" *ngFor="let item of courseList">
+    <div class="col-lg-4 mb-4" *ngFor="let course of courses">
       <div class="card h-100">
-        <h4 class="card-header">{{item.CourseName}}</h4>
+        <h4 class="card-header">{{course.courseName}}</h4>
         <div class="card-body">
-          <p class="card-text">{{item.CourseYear}}</p>
+          <p class="card-text">{{course.courseYear}}</p>
         </div>
         <div class="card-footer">
-          <a routerLink="/course/{{item.CourseId}}" class="btn btn-primary btn-block">manage course</a>
-          <a (click)="deleteCourse(item.CourseId)" class="btn btn-danger btn-block">delete course</a>
+          <a routerLink="/course/{{course.courseCrn}}" class="btn btn-primary btn-block">manage course</a>
+          <a (click)="deleteCourse(course.courseCrn)" class="btn btn-danger btn-block">delete course</a>
 
         </div>
       </div>
@@ -23,14 +23,14 @@
 <h3 style="text-align: center">Students courses</h3>
 <div class="container">
   <div class="row">
-    <div class="col-lg-4 mb-4" *ngFor="let item of courseList">
+    <div class="col-lg-4 mb-4" *ngFor="let course of courses">
       <div class="card h-100">
-        <h4 class="card-header">{{item.CourseName}}</h4>
+        <h4 class="card-header">{{course.courseName}}</h4>
         <div class="card-body">
-          <p class="card-text">{{item.CourseYear}}</p>
+          <p class="card-text">{{course.courseYear}}</p>
         </div>
         <div class="card-footer">
-          <a routerLink="/course/{{item.CourseCrn}}" class="btn btn-primary btn-block">view course</a>
+          <a routerLink="/course/{{course.courseCrn}}" class="btn btn-primary btn-block">view course</a>
 
         </div>
       </div>
