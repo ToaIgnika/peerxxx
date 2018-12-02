@@ -57,7 +57,9 @@ export class DashboardComponent implements OnInit {
         .subscribe(
           (res) => {
             console.log(res);
+            this.loadCourses();
             this.router.navigate(['/dashboard']);
+
           },
           err => {
             console.log(err);
@@ -74,7 +76,7 @@ export class DashboardComponent implements OnInit {
       }
     };
     console.log(config);
-    this.http.get(this.ApiUrl.allCourses, config)
+    this.http.get(this.ApiUrl.instructorCourses + this.auth.uid, config)
       .subscribe(
         (res) => {
           console.log(res);
@@ -87,52 +89,7 @@ export class DashboardComponent implements OnInit {
       );
   }
 
-  addCourseStudent() {
-    let data = {
-      "studentId": "s123",
-      "courseId": "c123",
-      "courseCrn": 0,
-      "courseTerm": "winter",
-      "courseyear": 0
-    };
-    var config = {
-      headers: {
-        "Content-Type": "application/json; charset = utf-8;",
-        "Authorization": "Bearer " + this.auth.JWTToken
-      }
-    };
-    console.log(config);
-    this.http.post(this.ApiUrl.createCourseStudent, data, config)
-      .subscribe(
-        (res) => {
-          console.log(res);
-          //this.router.navigate(['/dashboard']);
-        },
-        err => {
-          console.log(err);
-        }
-      );
-  }
 
-  deleteCourseStudent() {
-    var config = {
-      headers: {
-        "Content-Type": "application/json; charset = utf-8;",
-        "Authorization": "Bearer " + this.auth.JWTToken
-      }
-    };
-    console.log(config);
-    this.http.post(this.ApiUrl.deleteCourseStudent + "s123/c123" , config)
-      .subscribe(
-        (res) => {
-          console.log(res);
-          //this.router.navigate(['/dashboard']);
-        },
-        err => {
-          console.log(err);
-        }
-      );
-  }
 
   sendEvaluations() {
     if (confirm("Are you sure you want to send eveluations?")) {

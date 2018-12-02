@@ -16,7 +16,7 @@ export class CourseCreateComponent implements OnInit {
     courseName : "",
     courseTerm : "",
     courseYear : 2018,
-    instructorId : "meme"
+    instructorId : ""
   };
   constructor(private router: Router, 
     private http: HttpClient, 
@@ -29,6 +29,7 @@ export class CourseCreateComponent implements OnInit {
   createCourse() {
     // create course, on success redirect
     let data = this.courseModel;
+    data["instructorId"] = this.auth.uid;
     var config = {
       headers: {
         "Content-Type": "application/json; charset = utf-8;",

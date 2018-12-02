@@ -11,7 +11,7 @@ export class SessionService {
   public expire = "";
   public loggedIn = false;
   public userData: any;
-
+  public uid = "";
   private jwtType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role";
   public role;
   constructor(private router: Router, private http: HttpClient, private ApiUrl: ApiurlService) {
@@ -87,7 +87,8 @@ export class SessionService {
     let decodedJwtData = JSON.parse(decodedJwtJsonData)
     console.log(decodedJwtData);
     if (decodedJwtData != null) {
-      this.role = decodedJwtData[this.jwtType];
+      this.role = decodedJwtData["roles"];
+      this.uid = decodedJwtData["uid"];
       console.log(this.role);
     }
   }

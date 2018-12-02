@@ -9,9 +9,9 @@ export class ApiurlService {
   //public domain ="https://localhost:44365";
 
   // auth
-  public registerStudentUrl = this.domain + "/student/register"
-  public registerTeacherUrl = this.domain + "/teacher/register"
-  public loginUrl = this.domain + "/login";
+  public registerStudentUrl = this.domain + "/api/student/register"
+  public registerTeacherUrl = this.domain + "/api/teacher/register"
+  public loginUrl = this.domain + "/api/login";
 
 
   // course crud 
@@ -19,7 +19,7 @@ export class ApiurlService {
   public studentCourses = this.domain + "/api/course/s/"
   public allCourses = this.domain + "/api/course/"
   public createCourse = this.domain + "/api/course/create";
-  public deleteCourse = this.domain + "/api/course/"
+  public deleteCourse = this.domain + "/api/course/delete/"
 
 
   // coursestudent crud
