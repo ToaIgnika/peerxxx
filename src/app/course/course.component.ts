@@ -108,7 +108,7 @@ export class CourseComponent implements OnInit {
     var config = {
       headers: {
         "Content-Type": "application/json; charset = utf-8;",
-        "Authorization": "Bearer " + this.auth.JWTToken
+        "Authorization": "Bearer " + this.auth.getToken()
       }
     };
     console.log(config);
@@ -135,7 +135,7 @@ export class CourseComponent implements OnInit {
     var config = {
       headers: {
         "Content-Type": "application/json; charset = utf-8;",
-        "Authorization": "Bearer " + this.auth.JWTToken
+        "Authorization": "Bearer " + this.auth.getToken()
       }
     };
     console.log(config);
@@ -155,7 +155,7 @@ export class CourseComponent implements OnInit {
     var config = {
       headers: {
         "Content-Type": "application/json; charset = utf-8;",
-        "Authorization": "Bearer " + this.auth.JWTToken
+        "Authorization": "Bearer " + this.auth.getToken()
       }
     };
     console.log(config);
