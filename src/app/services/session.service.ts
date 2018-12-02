@@ -354,15 +354,18 @@ export class SessionService {
    * @returns an error of of type `Observabe<never>` with a message
    */
   private handleError(error: HttpErrorResponse): Observable<never> {
+    let msg = '';
+
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error.message);
     } else {
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong,
-      console.error('Invalid Username or Password');
+      console.error(`${error.statusText}`);
+      msg = error.statusText;
     }
     // return an observable with a user-facing error message
-    return throwError('Invalid Username or Password');
+    return throwError(msg);
   }
 }

@@ -1,36 +1,80 @@
 <app-navigation></app-navigation>
 <div class="container">
-  <div class="row">
-    <div class="col">
-      <div class="form-group">
-        <label for="email">Email address:</label>
-        <input type="email" class="form-control" id="email" [(ngModel)]="regModel.email">
-      </div>
-      <div class="form-group">
-          <label for="username">Email address:</label>
-          <input type="text" class="form-control" id="username" [(ngModel)]="regModel.userName">
+    <div class="row">
+        <div class="col">
+            <div *ngIf="errorMsg" class="alert alert-danger my-2 text-center">
+                {{ errorMsg }}
+            </div>
+            <div class="form-group">
+                <label for="email">Email address:</label>
+                <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    [(ngModel)]="registerModel.email"
+                />
+            </div>
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="username"
+                    [(ngModel)]="registerModel.userName"
+                />
+            </div>
+            <div class="form-group">
+                <label for="pwd">Password:</label>
+                <input
+                    type="password"
+                    class="form-control"
+                    id="pwd"
+                    [(ngModel)]="registerModel.password"
+                />
+            </div>
+            <div class="form-group">
+                <label for="fname">First name:</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="fname"
+                    [(ngModel)]="registerModel.firstName"
+                />
+            </div>
+            <div class="form-group">
+                <label for="lname">Last name:</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="lname"
+                    [(ngModel)]="registerModel.lastName"
+                />
+            </div>
+            <div class="form-check mb-2 mr-sm-2">
+                <label class="form-check-label pr-4">
+                    <input
+                        class="form-check-input"
+                        type="radio"
+                        value="Student"
+                        name="role"
+                        [(ngModel)]="role"
+                    />
+                    Student
+                </label>
+                <label class="form-check-label">
+                    <input
+                        class="form-check-input"
+                        type="radio"
+                        value="Teacher"
+                        name="role"
+                        [(ngModel)]="role"
+                    />
+                    Teacher
+                </label>
+            </div>
+            <button type="submit" class="btn btn-primary" (click)="register()">
+                Submit
+            </button>
         </div>
-      <div class="form-group">
-        <label for="pwd">Password:</label>
-        <input type="password" class="form-control" id="pwd" [(ngModel)]="regModel.password">
-      </div>
-      <div class="form-group">
-        <label for="fname">First name:</label>
-        <input type="text" class="form-control" id="fname" [(ngModel)]="regModel.firstName">
-      </div>
-      <div class="form-group">
-        <label for="lname">Last name:</label>
-        <input type="text" class="form-control" id="lname" [(ngModel)]="regModel.lastName">
-      </div>
-      <div class="form-check mb-2 mr-sm-2">
-        <label class="form-check-label">
-          <input class="form-check-input" type="checkbox" [(ngModel)]="regType"> Teacher
-        </label>
-      </div>
-      <button type="submit" class="btn btn-primary" (click)="register()">Submit</button>
-      
     </div>
-
-  </div>
-
 </div>
