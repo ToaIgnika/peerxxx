@@ -1,3 +1,4 @@
+import { TokenPayloadModel } from './models/token-payload-model';
 // Angular modules
 import {
     HttpClient,
@@ -12,6 +13,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { ApiurlService } from './apiurl.service';
 import { SessionService } from './session.service';
 import { CourseModel } from './models/course-model';
+import { ApplicationRole } from './models/application-role.enum';
 
 @Injectable({
     providedIn: 'root'
@@ -56,20 +58,21 @@ export class CourseService {
     }
 
     /**
-     * Get all courses for a specific instructor
-     *
-     * @param instructorId the instructor uid
+     * Get all courses for the current authenticated user
      *
      * @returns an `Observable` with an array of `CourseModel` upon success
      */
-    getInstructorCourses(): Observable<CourseModel[]> {
+    getCourses(): Observable<CourseModel[]> {
         const token = this.sessService.getToken();
 
         if (!token) {
             throw Error('No token found!');
         }
 
-        const url = this.apiUrlService.instructorCourses + token.uid;
+        const role = this.getRoleGivenToken(token);
+        const baseUrl = this.getCoursesUrlGivenRole(role);
+        const uid = token.uid;
+        const url = baseUrl + uid;
 
         return this.http
             .get<CourseModel[]>(url, {
@@ -81,6 +84,39 @@ export class CourseService {
             .pipe(
                 catchError(this.handleError) // handle error
             );
+    }
+
+    /**
+     * Get the current user's role
+     *
+     * @param token the token to get the role from
+     *
+     * @returns the the `ApplicationRole` for the current athenticated user
+     */
+    private getRoleGivenToken(token: TokenPayloadModel): ApplicationRole {
+        return token.roles.includes(ApplicationRole.Student)
+            ? ApplicationRole.Student
+            : ApplicationRole.Teacher;
+    }
+
+    /**
+     * Get the registration url for the specified role
+     *
+     * @param role the application role name to get the endpoint for
+     *
+     * @returns the the registration url for the specified application role
+     */
+    private getCoursesUrlGivenRole(role: ApplicationRole): string {
+        switch (role) {
+            case ApplicationRole.Student:
+                return this.apiUrlService.studentCourses;
+
+            case ApplicationRole.Teacher:
+                return this.apiUrlService.instructorCourses;
+
+            default:
+                return this.apiUrlService.studentCourses;
+        }
     }
 
     /**

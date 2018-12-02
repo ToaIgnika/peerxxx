@@ -1,3 +1,5 @@
+import { SessionService } from './../services/session.service';
+import { ApplicationRole } from './../services/models/application-role.enum';
 // Angular modules
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -16,14 +18,30 @@ import { CourseModel } from '../services/models/course-model';
 })
 export class DashboardComponent implements OnInit {
     courses: CourseModel[];
+    role: ApplicationRole;
 
-    constructor(private router: Router, private courseService: CourseService) {}
+    constructor(
+        private router: Router,
+        private courseService: CourseService,
+        private sessService: SessionService
+    ) {}
 
     ngOnInit(): void {
         this.getCourses();
+        this.role = this.sessService.isInRole(ApplicationRole.Student)
+            ? ApplicationRole.Student
+            : ApplicationRole.Teacher;
     }
 
-    deleteCourse(courseCrn) {
+    isStudent(): boolean {
+        return this.role === ApplicationRole.Student;
+    }
+
+    isTeacher(): boolean {
+        return this.role === ApplicationRole.Teacher;
+    }
+
+    deleteCourse(courseCrn): void {
         if (confirm('Are you sure to permanently delete this course?')) {
             console.log('Implement delete functionality here');
             // create course, on success redirect
@@ -40,8 +58,8 @@ export class DashboardComponent implements OnInit {
         }
     }
 
-    getCourses() {
-        this.courseService.getInstructorCourses().subscribe(
+    getCourses(): void {
+        this.courseService.getCourses().subscribe(
             (courses: CourseModel[]) => {
                 console.log(courses);
                 this.courses = courses;
