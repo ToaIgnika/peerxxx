@@ -1,17 +1,38 @@
 <app-navigation></app-navigation>
 <div class="container">
-  <div class="form-group">
-    <label for="sid">Student id:</label>
-    <input type="sid" class="form-control" id="email"  [(ngModel)]="logModel.userName">
-  </div>
-  <div class="form-group">
-    <label for="pwd">Password:</label>
-    <input type="password" class="form-control" id="pwd" [(ngModel)]="logModel.password">
-  </div>
-  <div class="form-group form-check">
-    <label class="form-check-label">
-      <input class="form-check-input" type="checkbox"> Remember me
-    </label>
-  </div>
-  <button type="button" class="btn btn-primary" (click)="login()">Submit</button>
+    <div *ngIf="errorMsg" class="alert alert-danger my-2 text-center">
+        {{ errorMsg }}
+    </div>
+    <div class="form-group">
+        <label for="username">Username:</label>
+        <input
+            type="text"
+            class="form-control"
+            id="username"
+            [(ngModel)]="loginModel.userName"
+        />
+    </div>
+    <div class="form-group">
+        <label for="pwd">Password:</label>
+        <input
+            type="password"
+            class="form-control"
+            id="pwd"
+            [(ngModel)]="loginModel.password"
+        />
+    </div>
+    <div class="form-group form-check">
+        <label class="form-check-label">
+            <input
+                class="form-check-input"
+                type="checkbox"
+                [checked]="remember"
+                [(ngModel)]="remember"
+            />
+            Remember me
+        </label>
+    </div>
+    <button type="button" class="btn btn-primary" (click)="login()">
+        Submit
+    </button>
 </div>
