@@ -112,9 +112,30 @@ export class EvaluationComponent implements OnInit {
       });
 
       //console.log(this.teamGrade);
-      this.evaluation.Grade = JSON.stringify(this.teamGrade);
+      this.evaluation.Grades = JSON.stringify(this.teamGrade);
       console.log(this.evaluation);
+       // create course, on success redirect
+      let data = this.evaluation;
+      data["instructorId"] = this.auth.uid;
+      var config = {
+        headers: {
+          "Content-Type": "application/json; charset = utf-8;",
+          "Authorization": "Bearer " + this.auth.JWTToken
+        }
+      };
+      console.log(this.evaluation);
+      console.log(this.evaluation.Id);
 
+      this.http.put(this.ApiUrl.submitStudentEvaluation + this.evaluation.Id , data, config)
+        .subscribe(
+          (res) => {
+            console.log(res);
+            this.router.navigate(['/dashboard']);
+          },
+          err => {
+            console.log(err);
+          }
+        );
     }
   }
 
