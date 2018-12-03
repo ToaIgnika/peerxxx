@@ -1,28 +1,30 @@
 <app-navigation></app-navigation>
-<div class="container">
+<div class="container" *ngIf="auth.role=='Teacher'">
   <div class="row">
     <div class="col-lg-4 mb-4">
       <h3>Students</h3>
       <ul>
-        <li *ngFor="let student of studentList">{{student.lastName}} {{student.firstName}}</li>
+        <li *ngFor="let student of studentList">{{student.LastName}} {{student.FirstName}}</li>
       </ul>
     </div>
     <div class="col-lg-4 mb-4">
       <h3>Groups</h3>
-      <div class="card" *ngFor="let group of courseGroups" style="margin-bottom: 5px">
-        <div class="card-header">{{group.groupName}}</div>
+      <div class="card" *ngFor="let group of groups" style="margin-bottom: 5px">
+        <div class="card-header">{{group[0].GroupName}}</div>
         <div class="card-body">
-          <li *ngFor="let groupMember of group.members">{{groupMember}}</li>
+          <li *ngFor="let groupMember of group">{{groupMember.StudentId}}</li>
         </div>
-        <div class="card-footer">Grade: <input type="number" value="100">%</div>
+        <div class="card-footer">Grade: <input type="number" id="{{group[0].GroupName}}" value="{{group[0].Grade}}" readonly>%</div>
       </div>
     </div>
     <div class="col-lg-4 mb-4">
       <h3>Tools</h3>
-      <button class="btn btn-info btn-block">Send evaluations</button>
+      <button class="btn btn-info btn-block" (click)="sendEvaluations()">Send evaluations</button>
       <button class="btn btn-info btn-block">Check grades</button> <br>
-        <input type="file" class="btn btn-info" (change)="onFileSelect($event.target)" name="myfile">
+
+      <input type="file" class="btn btn-info" (change)="onFileSelect($event)" name="myfile">
     </div>
   </div>
 </div>
+
 

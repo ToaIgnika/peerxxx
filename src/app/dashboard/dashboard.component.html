@@ -1,44 +1,42 @@
 <app-navigation></app-navigation>
-<h3 style="text-align: center">Teachers courses</h3>
-<div class="container">
-  <div class="row">
-    <div class="col-lg-4 mb-4" *ngFor="let item of courseList">
-      <div class="card h-100">
-        <h4 class="card-header">{{item.CourseName}}</h4>
-        <div class="card-body">
-          <p class="card-text">{{item.CourseYear}}</p>
-        </div>
-        <div class="card-footer">
-          <a routerLink="/course/{{item.CourseCrn}}" class="btn btn-primary btn-block">manage course</a>
-          <a (click)="deleteCourse(item.CourseCrn)" class="btn btn-danger btn-block">delete course</a>
-
+<div *ngIf="auth.role=='Teacher'">
+  <h3 style="text-align: center">Teachers courses</h3>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 mb-4" *ngFor="let item of courseList">
+        <div class="card h-100">
+          <h4 class="card-header">{{item.CourseName}}</h4>
+          <div class="card-body">
+            <p class="card-text">{{item.CourseYear}}</p>
+          </div>
+          <div class="card-footer">
+            <a routerLink="/course/{{item.CourseCrn}}" class="btn btn-primary btn-block">manage course</a>
+            <a (click)="deleteCourse(item.CourseCrn)" class="btn btn-danger btn-block">delete course</a>
+          </div>
         </div>
       </div>
+      <button type="button" routerLink="/course-create" class="btn btn-success btn-block">Add course</button>
     </div>
-    <button type="button" routerLink="/course-create" class="btn btn-success btn-block">Add course</button>
   </div>
 </div>
 <br>
-<br>
-<h3 style="text-align: center">Students courses</h3>
-<div class="container">
-  <div class="row">
-    <div class="col-lg-4 mb-4" *ngFor="let item of courseList">
-      <div class="card h-100">
-        <h4 class="card-header">{{item.CourseName}}</h4>
-        <div class="card-body">
-          <p class="card-text">{{item.CourseYear}}</p>
-        </div>
-        <div class="card-footer">
-          <a routerLink="/course/{{item.CourseCrn}}" class="btn btn-primary btn-block">view course</a>
-
+<div *ngIf="auth.role=='Student'">
+  <h3 style="text-align: center">Pending evaluations</h3>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 mb-4" *ngFor="let item of evaluationList">
+        <div class="card h-100">
+          <h4 class="card-header">{{item.StudentGroupName}}</h4>
+          <div class="card-body">
+            <p class="card-text">{{item.CourseName}}</p>
+          </div>
+          <div class="card-footer">
+            <a routerLink="/evaluation/{{item.CourseCrn}}" class="btn btn-primary btn-block">Complete evaluation</a>
+          </div>
         </div>
       </div>
     </div>
-    <button type="button" class="btn btn-success btn-block">Join course</button>
   </div>
-</div>
-<button type="button" (click)="addCourseStudent()" class="btn btn-success btn-block">add student course</button>
-<button type="button" (click)="deleteCourseStudent()" class="btn btn-success btn-block">delete student course</button>
+ </div>
 
 <br>

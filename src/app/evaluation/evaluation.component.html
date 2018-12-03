@@ -4,17 +4,17 @@
     <div class="col">
       <h3>Evaluation form</h3>
       <p>Rate your team and leave comments. Be honest!</p>
-      <div class="input-group mb-3" *ngFor="let member of teamList">
+      <div class="input-group mb-3" *ngFor="let member of teamList2">
           <div class="input-group-prepend">
-            <span class="input-group-text">{{member.firstName}} {{member.lastName}}</span>
+            <span class="input-group-text">{{member.FirstName}} {{member.LastName}}</span>
           </div>
-          <input id={{member.studentId}} type="number" min=0 max=100 value=0 class="form-control" required>
+          <input type="number" min=0 max=100  [(ngModel)]='member.Grade'  class="form-control"  required>
         </div>
         <div class="form-group">
             <label for="comment">Additional comments about your contribution + anything else you want to mention:</label>
-            <textarea class="form-control" rows="5" id="comment" required></textarea>
+            <textarea class="form-control" rows="5" id="comment" [(ngModel)]='evaluation.Comments' required ></textarea>
           </div>
-          <button class="btn btn-success btn-block">Submit</button>
+          <button class="btn btn-success btn-block" (click)='submitEvaluation()'>Submit</button>
     </div>
   </div>
 </div>

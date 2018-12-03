@@ -5,8 +5,8 @@ import { Injectable } from '@angular/core';
 })
 export class ApiurlService {
   //domains
-  public domain ="https://groupgradingapi.azurewebsites.net";
-  //public domain ="https://localhost:44365";
+  //public domain ="https://groupgradingapi.azurewebsites.net";
+  public domain = "https://localhost:44365";
 
   // auth
   public registerStudentUrl = this.domain + "/api/student/register"
@@ -25,7 +25,17 @@ export class ApiurlService {
   // coursestudent crud
   public createCourseStudent = this.domain + "/api/CourseStudent/create"
   public deleteCourseStudent = this.domain + "/api/CourseStudent/"
-  public getCourseStudents = this.domain + "/api/CourseStudent/i/"
+  public getCourseStudents = this.domain + "/api/CourseStudent/"
+
+  // studentgroup crud
+  public createStudentGroup = this.domain + "/api/StudentGroup/create"
+  public deleteStudentGroup = this.domain + "/api/StudentGroup/"
+  public getStudentGroup = this.domain + "/api/StudentGroup/i/"
+  public getStudentGroupS = this.domain + "/api/StudentGroup/s/"
+
+  // evaluations
+  public createCourseEvalutaions = this.domain + "/api/Evaluation/create/"
+  public getStudentCourseEvaluation = this.domain + "/api/Evaluation/"
 
   constructor() { }
 }

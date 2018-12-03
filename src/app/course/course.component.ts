@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ApiurlService } from '../services/apiurl.service';
 import { SessionService } from '../services/session.service';
+import { TouchSequence } from 'selenium-webdriver';
 
 @Component({
   selector: 'app-course',
@@ -12,6 +13,7 @@ import { SessionService } from '../services/session.service';
 })
 export class CourseComponent implements OnInit {
 
+  private that = this;
   private id = '';
   private course;
   public studentList: any = [
@@ -46,7 +48,6 @@ export class CourseComponent implements OnInit {
       studentId: 6
     },
   ]
-
   public courseGroups: any = [
     {
       groupName: "champions",
@@ -57,6 +58,7 @@ export class CourseComponent implements OnInit {
       members: ["looser1", "amir", "looser2"]
     },
   ]
+  public groups: any;
 
   csvContent: string;
 
@@ -65,46 +67,25 @@ export class CourseComponent implements OnInit {
     private http: HttpClient,
     private ApiUrl: ApiurlService,
     private auth: SessionService) {
-    this.id = '' + this.route.snapshot.paramMap.get('id');
-
-  }
-
-
-  onFileLoad(fileLoadedEvent) {
-    const textFromFileLoaded = fileLoadedEvent.target.result;
-    this.csvContent = textFromFileLoaded;
-    console.log(this.csvContent);
-    // alert(this.csvContent);
-  }
-
-  onFileSelect(input: HTMLInputElement) {
-
-    const files = input.files;
-    var content = this.csvContent;
-    if (files && files.length) {
-      /*
-       console.log("Filename: " + files[0].name);
-       console.log("Type: " + files[0].type);
-       console.log("Size: " + files[0].size + " bytes");
-       */
-
-      const fileToRead = files[0];
-
-      const fileReader = new FileReader();
-      fileReader.onload = this.onFileLoad;
-
-      fileReader.readAsText(fileToRead, "UTF-8");
+    if (auth.role == 'Teacher') {
+      this.id = '' + this.route.snapshot.paramMap.get('id');
+      this.loadCourseStudents();
+      this.loadStudentGroup();
+    } else {
+      router.navigate(['/home']);
     }
+
   }
 
-  addCourseStudent() {
+
+
+
+  addCourseStudent(sId) {
     let data = {
-      "studentId": "s123",
-      "courseId": "c123",
-      "courseCrn": 0,
-      "courseTerm": "winter",
-      "courseyear": 0
+      "StudentId": sId,
+      "CourseCrn": this.id
     };
+    console.log("i have been called");
     var config = {
       headers: {
         "Content-Type": "application/json; charset = utf-8;",
@@ -124,14 +105,17 @@ export class CourseComponent implements OnInit {
       );
   }
 
-  addStudentGroup() {
+
+
+  addStudentGroup(gName, sId, grade) {
+
     let data = {
-      "studentId": "s123",
-      "courseId": "c123",
-      "courseCrn": 0,
-      "courseTerm": "winter",
-      "courseyear": 0
+      GroupName: gName,
+      StudentId: sId,
+      CourseCrn: this.id,
+      Grade: grade
     };
+    console.log(data);
     var config = {
       headers: {
         "Content-Type": "application/json; charset = utf-8;",
@@ -139,10 +123,33 @@ export class CourseComponent implements OnInit {
       }
     };
     console.log(config);
-    this.http.post(this.ApiUrl.createCourseStudent, data, config)
+    this.http.post(this.ApiUrl.createStudentGroup, data, config)
       .subscribe(
         (res) => {
           console.log(res);
+          //this.router.navigate(['/dashboard']);
+        },
+        err => {
+          console.log(err);
+        }
+      );
+  }
+
+  loadStudentGroup() {
+    var config = {
+      headers: {
+        "Content-Type": "application/json; charset = utf-8;",
+        "Authorization": "Bearer " + this.auth.JWTToken
+      }
+    };
+    console.log(config);
+    this.http.get(this.ApiUrl.getStudentGroup + this.id, config)
+      .subscribe(
+        (res) => {
+          console.log(res);
+          this.groups = res;
+
+          //this.courseGroups = res;
           //this.router.navigate(['/dashboard']);
         },
         err => {
@@ -159,7 +166,7 @@ export class CourseComponent implements OnInit {
       }
     };
     console.log(config);
-    this.http.post(this.ApiUrl.deleteCourseStudent + "s123/c123" , config)
+    this.http.post(this.ApiUrl.deleteCourseStudent + "s123/c123", config)
       .subscribe(
         (res) => {
           console.log(res);
@@ -169,6 +176,76 @@ export class CourseComponent implements OnInit {
           console.log(err);
         }
       );
+  }
+
+  loadCourseStudents() {
+    var config = {
+      headers: {
+        "Content-Type": "application/json; charset = utf-8;",
+        "Authorization": "Bearer " + this.auth.JWTToken
+      }
+    };
+    console.log(config);
+    this.http.get(this.ApiUrl.getCourseStudents + this.id, config)
+      .subscribe(
+        (res) => {
+          console.log(res);
+          this.studentList = res;
+          //this.router.navigate(['/dashboard']);
+        },
+        err => {
+          console.log(err);
+        }
+      );
+  }
+
+
+
+  onFileSelect($event) {
+    var input = $event.target;
+    var input = $event.target;
+    var reader = new FileReader();
+    reader.readAsText(input.files[0]);
+
+    reader.onload = (data) => {
+      let csvData = reader.result;
+      console.log(csvData);
+      var rows = csvData.toString().split('\n');
+      console.log(rows);
+      for (let i = 1; i < rows.length - 1; i++) {
+        var cols = rows[i].split(',');
+        console.log(cols);
+        this.addCourseStudent(cols[1]);
+        this.addStudentGroup(cols[0], cols[1], cols[2]);
+      }
+      this.router.navigate(['/course/' + this.id]);
+
+    }
+  }
+
+
+  sendEvaluations() {
+    if (confirm("Are you sure you want to send eveluations?")) {
+      // send out the forms
+      console.log("implement sending forms");
+      var config = {
+        headers: {
+          "Content-Type": "application/json; charset = utf-8;",
+          "Authorization": "Bearer " + this.auth.JWTToken
+        }
+      };
+      console.log(config);
+      this.http.post(this.ApiUrl.createCourseEvalutaions + this.id, config)
+        .subscribe(
+          (res) => {
+            console.log(res);
+            alert(res);
+          },
+          err => {
+            console.log(err);
+          }
+        );
+    }
   }
 
   ngOnInit() {

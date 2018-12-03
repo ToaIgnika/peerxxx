@@ -29,13 +29,21 @@ export class DashboardComponent implements OnInit {
     },
   ]
 
+  public evaluationList: any;
+
   constructor(
     private router: Router,
     private http: HttpClient,
     private ApiUrl: ApiurlService,
     private auth: SessionService
-  ) { 
-    this.loadCourses();
+  ) {
+    if (auth.role == 'Teacher') {
+      this.loadCourses();
+    } else if (auth.role == 'Student') {
+      this.loadEvaluations();
+    } else {
+      router.navigate(['/home']);
+    }
   }
 
   ngOnInit() {
@@ -45,7 +53,7 @@ export class DashboardComponent implements OnInit {
     if (confirm("Are you sure to permanently delete this course?")) {
       console.log("Implement delete functionality here");
       // create course, on success redirect
-     
+
       var config = {
         headers: {
           "Content-Type": "application/json; charset = utf-8;",
@@ -89,12 +97,24 @@ export class DashboardComponent implements OnInit {
       );
   }
 
-
-
-  sendEvaluations() {
-    if (confirm("Are you sure you want to send eveluations?")) {
-      // send out the forms
-      console.log("implement sending forms");
-    }
+  loadEvaluations() {
+    var config = {
+      headers: {
+        "Content-Type": "application/json; charset = utf-8;",
+        "Authorization": "Bearer " + this.auth.JWTToken
+      }
+    };
+    console.log(config);
+    this.http.get(this.ApiUrl.getStudentCourseEvaluation + this.auth.uid, config)
+      .subscribe(
+        (res) => {
+          console.log(res);
+          this.evaluationList = res;
+        },
+        err => {
+          console.log(err);
+        }
+      );
   }
+
 }
