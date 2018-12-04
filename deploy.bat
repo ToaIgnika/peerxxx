@@ -1,0 +1,1 @@
+ng build --prod --base-href "https://toaignika.github.io/peerxxx/" & ngh --dir="dist/peerxxx"
