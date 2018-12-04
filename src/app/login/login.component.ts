@@ -8,7 +8,7 @@ import { SessionService } from '../services/session.service'
 })
 export class LoginComponent implements OnInit {
 
-  private logModel : any = {
+  public logModel : any = {
     userName : "",
     password : ""
   }

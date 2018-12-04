@@ -20,7 +20,7 @@ export class DashboardComponent implements OnInit {
     private router: Router,
     private http: HttpClient,
     private ApiUrl: ApiurlService,
-    private auth: SessionService
+    public auth: SessionService
   ) {
     if (auth.role == 'Teacher') {
       this.loadCourses();
@@ -36,7 +36,7 @@ export class DashboardComponent implements OnInit {
 
   deleteCourse(id) {
     if (confirm("Are you sure to permanently delete this course?")) {
-      console.log("Implement delete functionality here");
+      //console.log("Implement delete functionality here");
       // create course, on success redirect
 
       var config = {
@@ -45,11 +45,11 @@ export class DashboardComponent implements OnInit {
           "Authorization": "Bearer " + this.auth.JWTToken
         }
       };
-      console.log(config);
+      //console.log(config);
       this.http.delete(this.ApiUrl.deleteCourse + id, config)
         .subscribe(
           (res) => {
-            console.log(res);
+           // console.log(res);
             this.loadCourses();
             this.router.navigate(['/dashboard']);
 
@@ -72,7 +72,7 @@ export class DashboardComponent implements OnInit {
     this.http.get(this.ApiUrl.instructorCourses + this.auth.uid, config)
       .subscribe(
         (res) => {
-          console.log(res);
+          //console.log(res);
           this.courseList = res;
           this.router.navigate(['/dashboard']);
         },
@@ -93,7 +93,7 @@ export class DashboardComponent implements OnInit {
     this.http.get(this.ApiUrl.getStudentCourseEvaluation + this.auth.uid, config)
       .subscribe(
         (res) => {
-          console.log(res);
+          //console.log(res);
           this.evaluationList = res;
         },
         err => {

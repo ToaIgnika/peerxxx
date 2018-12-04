@@ -5,8 +5,8 @@ import { Injectable } from '@angular/core';
 })
 export class ApiurlService {
   //domains
-  //public domain ="https://groupgradingapi.azurewebsites.net";
-  public domain = "https://localhost:44365";
+  public domain ="https://groupgradingapi.azurewebsites.net";
+  //public domain = "https://localhost:44365";
 
   // auth
   public registerStudentUrl = this.domain + "/api/student/register"

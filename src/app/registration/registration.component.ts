@@ -8,8 +8,8 @@ import { SessionService } from '../services/session.service'
 })
 export class RegistrationComponent implements OnInit {
 
-  private regType : boolean;
-  private regModel : any = {
+  public regType : boolean;
+  public regModel : any = {
     email : "",
     firstName : "",
     lastName : "",

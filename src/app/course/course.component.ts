@@ -39,7 +39,7 @@ export class CourseComponent implements OnInit {
     private router: Router,
     private http: HttpClient,
     private ApiUrl: ApiurlService,
-    private auth: SessionService) {
+    public auth: SessionService) {
     if (auth.role == 'Teacher') {
       this.id = '' + this.route.snapshot.paramMap.get('id');
       this.loadCourseStudents();
@@ -59,18 +59,16 @@ export class CourseComponent implements OnInit {
       "StudentId": sId,
       "CourseCrn": this.id
     };
-    console.log("i have been called");
     var config = {
       headers: {
         "Content-Type": "application/json; charset = utf-8;",
         "Authorization": "Bearer " + this.auth.JWTToken
       }
     };
-    console.log(config);
     this.http.post(this.ApiUrl.createCourseStudent, data, config)
       .subscribe(
         (res) => {
-          console.log(res);
+          //console.log(res);
           //this.router.navigate(['/dashboard']);
         },
         err => {
@@ -89,18 +87,16 @@ export class CourseComponent implements OnInit {
       CourseCrn: this.id,
       Grade: grade
     };
-    console.log(data);
     var config = {
       headers: {
         "Content-Type": "application/json; charset = utf-8;",
         "Authorization": "Bearer " + this.auth.JWTToken
       }
     };
-    console.log(config);
     this.http.post(this.ApiUrl.createStudentGroup, data, config)
       .subscribe(
         (res) => {
-          console.log(res);
+          //console.log(res);
           //this.router.navigate(['/dashboard']);
         },
         err => {
@@ -116,11 +112,10 @@ export class CourseComponent implements OnInit {
         "Authorization": "Bearer " + this.auth.JWTToken
       }
     };
-    console.log(config);
     this.http.get(this.ApiUrl.getStudentGroup + this.id, config)
       .subscribe(
         (res) => {
-          console.log(res);
+          //console.log(res);
           this.groups = res;
 
           //this.courseGroups = res;
@@ -139,11 +134,11 @@ export class CourseComponent implements OnInit {
         "Authorization": "Bearer " + this.auth.JWTToken
       }
     };
-    console.log(config);
+    
     this.http.post(this.ApiUrl.deleteCourseStudent + "s123/c123", config)
       .subscribe(
         (res) => {
-          console.log(res);
+          //console.log(res);
           //this.router.navigate(['/dashboard']);
         },
         err => {
@@ -159,11 +154,10 @@ export class CourseComponent implements OnInit {
         "Authorization": "Bearer " + this.auth.JWTToken
       }
     };
-    console.log(config);
     this.http.get(this.ApiUrl.getCourseStudents + this.id, config)
       .subscribe(
         (res) => {
-          console.log(res);
+          //console.log(res);
           this.studentList = res;
           //this.router.navigate(['/dashboard']);
         },
@@ -183,12 +177,9 @@ export class CourseComponent implements OnInit {
 
     reader.onload = (data) => {
       let csvData = reader.result;
-      console.log(csvData);
       var rows = csvData.toString().split('\n');
-      console.log(rows);
       for (let i = 1; i < rows.length - 1; i++) {
         var cols = rows[i].split(',');
-        console.log(cols);
         this.addCourseStudent(cols[1]);
         this.addStudentGroup(cols[0], cols[1], cols[2]);
       }
@@ -201,18 +192,16 @@ export class CourseComponent implements OnInit {
   sendEvaluations() {
     if (confirm("Are you sure you want to send eveluations?")) {
       // send out the forms
-      console.log("implement sending forms");
       var config = {
         headers: {
           "Content-Type": "application/json; charset = utf-8;",
           "Authorization": "Bearer " + this.auth.JWTToken
         }
       };
-      console.log(config);
       this.http.post(this.ApiUrl.createCourseEvalutaions + this.id, config)
         .subscribe(
           (res) => {
-            console.log(res);
+            //console.log(res);
             alert(res);
           },
           err => {
@@ -229,11 +218,10 @@ export class CourseComponent implements OnInit {
         "Authorization": "Bearer " + this.auth.JWTToken
       }
     };
-    console.log(config);
     this.http.get(this.ApiUrl.getStudentCourseEvaluation + this.id, config)
       .subscribe(
         (res) => {
-          console.log(res);
+          //console.log(res);
           if (res) {
             this.evalStatus = true;
           } else {

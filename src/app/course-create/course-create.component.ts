@@ -36,7 +36,6 @@ export class CourseCreateComponent implements OnInit {
         "Authorization": "Bearer " + this.auth.JWTToken
       }
     };
-    console.log(config);
     this.http.post(this.ApiUrl.createCourse, data, config)
       .subscribe(
         (res) => {
