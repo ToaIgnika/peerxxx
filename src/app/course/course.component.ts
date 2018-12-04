@@ -16,43 +16,16 @@ export class CourseComponent implements OnInit {
   private that = this;
   private id = '';
   private course;
+  evalStatus : boolean ;
+
   public studentList: any = [
     {
       firstName: "Madhat",
       lastName: "Boi",
       studentId: 1
-    },
-    {
-      firstName: "jake",
-      lastName: "jake",
-      studentId: 2
-    },
-    {
-      firstName: "world",
-      lastName: "hello",
-      studentId: 3
-    },
-    {
-      firstName: "hangman",
-      lastName: "amir",
-      studentId: 4
-    },
-    {
-      firstName: "godbdulla",
-      lastName: "alex",
-      studentId: 5
-    },
-    {
-      firstName: "Josef",
-      lastName: "Stalin",
-      studentId: 6
-    },
+    }
   ]
   public courseGroups: any = [
-    {
-      groupName: "champions",
-      members: ["champ1", "champ2", "champ3"]
-    },
     {
       groupName: "loosers",
       members: ["looser1", "amir", "looser2"]
@@ -71,6 +44,7 @@ export class CourseComponent implements OnInit {
       this.id = '' + this.route.snapshot.paramMap.get('id');
       this.loadCourseStudents();
       this.loadStudentGroup();
+      this.getEvaluationStatus(); 
     } else {
       router.navigate(['/home']);
     }
@@ -218,7 +192,7 @@ export class CourseComponent implements OnInit {
         this.addCourseStudent(cols[1]);
         this.addStudentGroup(cols[0], cols[1], cols[2]);
       }
-      this.router.navigate(['/course/' + this.id]);
+      this.router.navigate(['/dashboard']);
 
     }
   }
@@ -246,6 +220,30 @@ export class CourseComponent implements OnInit {
           }
         );
     }
+  }
+
+  getEvaluationStatus() {
+    var config = {
+      headers: {
+        "Content-Type": "application/json; charset = utf-8;",
+        "Authorization": "Bearer " + this.auth.JWTToken
+      }
+    };
+    console.log(config);
+    this.http.get(this.ApiUrl.getStudentCourseEvaluation + this.id, config)
+      .subscribe(
+        (res) => {
+          console.log(res);
+          if (res) {
+            this.evalStatus = true;
+          } else {
+            this.evalStatus = false;
+          }
+        },
+        err => {
+          console.log(err);
+        }
+      );
   }
 
   ngOnInit() {

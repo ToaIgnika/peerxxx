@@ -7,6 +7,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { CourseComponent } from './course/course.component';
 import { EvaluationComponent } from './evaluation/evaluation.component';
 import { CourseCreateComponent } from './course-create/course-create.component';
+import { GradesComponent } from './grades/grades.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -16,7 +17,8 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent},
   { path: 'course/:id', component: CourseComponent},
   { path: 'evaluation/:id', component: EvaluationComponent},
-  { path: 'course-create', component: CourseCreateComponent}
+  { path: 'course-create', component: CourseCreateComponent},
+  { path: 'grades/:id', component: GradesComponent}
 ];
 
 @NgModule({

@@ -12,21 +12,6 @@ import { SessionService } from '../services/session.service';
 export class DashboardComponent implements OnInit {
 
   public courseList: any = [
-    {
-      courseName: "Madhat",
-      courseYear: 2018,
-      courseId: 111
-    },
-    {
-      courseName: "Amir",
-      courseYear: 2018,
-      courseId: 222
-    },
-    {
-      courseName: "Ffs",
-      courseYear: 2018,
-      courseId: 333
-    },
   ]
 
   public evaluationList: any;
@@ -116,5 +101,7 @@ export class DashboardComponent implements OnInit {
         }
       );
   }
+
+ 
 
 }

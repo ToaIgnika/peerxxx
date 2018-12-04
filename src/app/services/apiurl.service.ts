@@ -37,6 +37,6 @@ export class ApiurlService {
   public createCourseEvalutaions = this.domain + "/api/Evaluation/create/"
   public getStudentCourseEvaluation = this.domain + "/api/Evaluation/"
   public submitStudentEvaluation = this.domain + "/api/Evaluation/"
-
+  public getStudentGrades = this.domain + "/api/Evaluation/grades/"
   constructor() { }
 }

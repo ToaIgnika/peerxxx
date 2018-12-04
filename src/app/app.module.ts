@@ -14,6 +14,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { CourseComponent } from './course/course.component';
 import { EvaluationComponent } from './evaluation/evaluation.component';
 import { CourseCreateComponent } from './course-create/course-create.component';
+import { GradesComponent } from './grades/grades.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { CourseCreateComponent } from './course-create/course-create.component';
     DashboardComponent,
     CourseComponent,
     EvaluationComponent,
-    CourseCreateComponent
+    CourseCreateComponent,
+    GradesComponent
   ],
   imports: [
     BrowserModule,
