@@ -218,7 +218,7 @@ export class CourseComponent implements OnInit {
         "Authorization": "Bearer " + this.auth.JWTToken
       }
     };
-    this.http.get(this.ApiUrl.getStudentCourseEvaluation + this.id, config)
+    this.http.get(this.ApiUrl.getCourseEvaluation + this.id, config)
       .subscribe(
         (res) => {
           //console.log(res);
